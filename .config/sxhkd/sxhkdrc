@@ -1,0 +1,126 @@
+# RELOAD DE CONFIGURACIONES
+# make sxhkd reload its configuration files
+alt + shift + Escape
+	pkill -USR1 -x sxhkd
+
+# quit or restart bspwm
+alt + shift + {q,r}
+	bspc {quit,wm -r}
+
+########################################################################################
+
+#MOV & FOCUS : super + *
+# terminal emulator
+super + Return
+	urxvt
+
+# close or kill a window 
+super + {_,shift + }BackSpace
+	bspc node -{c,k}
+
+#movement focus
+super + {h,j,k,l}
+	bspc node -f {west,south,north,east}
+
+# move focus to the nth desktop
+ctrl + super + {0-5}
+	bspc desktop -f {0,I,II,III,IV,V}
+
+# move focus to the next desktop
+ctrl + super + {Left,Right}
+	bspc desktop -f {prev,next}
+
+# switch focus between the windows of the current 
+super + {_,shift} +  Tab
+	bspc node -f {next,prev}.local 
+
+######################################################################################
+
+#MOV & CONT-EXPAND-SWAP
+# create a new terminal window or swap the current one to the biggest one in t
+super + alt + u
+	bspc node -s biggest.local
+
+# expand a window by moving one of its side outward
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# Contract a window by moving one of its side inward
+super + alt + shift + {h,j,k,l}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# focus or send a window to the given desktop
+#ctrl + super + shift + {0-5}
+#	bspc node -d "^{0,I,II,III,IV,V}"
+
+
+#Hide/Unhide window
+super + alt + i
+	~/.config/sxhkd/winhide
+# Toggle floating on and off
+super + alt +  o
+	bspc node focused.tiled -t floating || bspc node focused.floating -t tiled
+
+# Move a floating window
+super + alt + {Left,Right,Up,Down}
+	xdo move {-x -20, -x +20, -y -20, -y +20}
+
+#######################################################################################
+
+#CONF SETS DE FN
+# brillo
+XF86MonBrightnessUp
+	~/.config/sxhkd/brightness.sh 1
+
+XF86MonBrightnessDown
+	~/.config/sxhkd/brightness.sh 2
+
+# volumen
+XF86AudioRaiseVolume
+ pactl set-sink-volume 0 +2%;\
+ dunstify -r 1234 "`echo -e "\uf028"` `volume -f '%i'`"
+
+XF86AudioLowerVolume
+ pactl set-sink-volume 0 -2%;\
+ dunstify -r 1234 "`echo -e "\uf027"` `volume -f '%i'`"
+
+# take a screenshot
+Print
+	import -window root ~/Pictures/screenshots/screenshot.png
+
+#######################################################################################
+
+#APLICACIONES, SUPER + INICIAL
+# firefox
+super + d
+	firefox
+
+# ranger
+super + r
+	urxvt -e ranger
+
+
+# open 4chan lit
+super + 4 
+	surf https://boards.4channel.org/
+
+# open surf
+super + s
+	surf https://google.com
+
+# open vim
+# para abrir vim se da escape en la terminal y luego super+v, parece ser un buitin en el vim mode no lo se 
+super + v
+	urxvt -e vi
+# open inkcsape
+super + i
+	inkscape
+# open 
+super + g
+	google-chrome
+# open calibre
+super + c
+	calibre
+#open solfege
+super + t
+	solfege

@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# $HOME/.config/polybar/launch.sh &
+bspc monitor -d 0 I II III IV V 
+
+xsetroot -cursor_name left_ptr
+sxhkd &
+~/.config/polybar/launch.sh
+
+
+bspc config border_width	0
+bspc config window_gap		16
+bspc config split_ratio		0.618
+bspc config top_padding		34
+bspc config focus_follows_pointer	true
+bspc config pointer_modifier	mod1
+
+#bar-volume-empty-foreground = ${colors.foreground-alt}
+
+bspc config automatic scheme	spiral
+
+
+bspc rule -a Zathura state=tiled
+bspc rule -a Surf  state=tiled
+
+# pywal
+# source the colors.
+. "${HOME}/.cache/wal/colors.sh"
+
+# Set the border colors.
+bspc config normal_border_color "$color1"
+bspc config active_border_color "$color2"
+bspc config focused_border_color "$color15"
+# Use the line below if you are on bspwm >= 0.9.4
+bspc config presel_feedback_color "$color1"
+# Use the line below if you are on bspwm < 0.9.4
+#bspc config presel_border_color "$color1"
+
+feh --bg-fill "$wallpaper" &
+compton --config ~/.config/compton/compton.conf
